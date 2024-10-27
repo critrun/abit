@@ -17,6 +17,14 @@
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>Anton's Binary Information Tree</name>
+      <url>https://maven.pkg.github.com/deepslateorg/abit</url>
+    </repository>
+  </distributionManagement>
+
   <repositories>
     <repository>
         <id>jitpack.io</id>

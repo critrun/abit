@@ -10,9 +10,6 @@ import org.deepslate.abit.ABITException;
 import org.deepslate.abit.ABITObject;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
 public class AppTest 
 {
     /**
