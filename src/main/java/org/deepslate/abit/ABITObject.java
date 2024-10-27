@@ -32,10 +32,18 @@ public class ABITObject {
     byte[] blob;
     long intValue;
 
+    /**
+     * Initialize an ABITObject.
+     */
     public ABITObject() {
         this.type = 6;
     }
 
+    /**
+     * Initialize an ABITObject from an abit document inside a byte array.
+     * @param document the byte array containing the abit document.
+     * @throws ABITException
+     */
     public ABITObject(byte[] document) throws ABITException {
         this.type = 6;
         this.tree = decodeTree(document, 0, document.length);
@@ -468,13 +476,25 @@ public class ABITObject {
         }
     }
 
+    /**
+     * Convert this ABITObject to its binary form.
+     * @return byte array containing the abit object.
+     * @throws IOException
+     */
     public byte[] toByteArray() throws IOException {
         return encodeTree(this.tree, false);
     }
 
-    public void put(String key, NULL_t object) throws ABITException {
+    /**
+     * Associates the specified object with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key key with which the specified value is to be associated
+     * @param object object to be associated with the specified key
+     * @throws ABITException if the object is incompatible
+     * @throws IllegalArgumentException if the key is incompatible
+     */
+    public void put(String key, NULL_t object) throws ABITException, IllegalArgumentException {
         if (!isCompatibleKey(key)) {
-            throw new ABITException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
         }
         if (!isCompatibleNull(object)) {
             throw new ABITException("Incompatible null, this should literally not happen");
@@ -482,9 +502,16 @@ public class ABITObject {
         this.tree.put(key, new ABITObject(NULL));
     }
 
-    public void put(String key, boolean object) throws ABITException {
+    /**
+     * Associates the specified object with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key key with which the specified value is to be associated
+     * @param object object to be associated with the specified key
+     * @throws ABITException if the object is incompatible
+     * @throws IllegalArgumentException if the key is incompatible
+     */
+    public void put(String key, boolean object) throws ABITException, IllegalArgumentException  {
         if (!isCompatibleKey(key)) {
-            throw new ABITException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
         }
         if (!isCompatibleBoolean(object)) {
             throw new ABITException("Incompatible boolean, this should literally not happen");
@@ -492,9 +519,16 @@ public class ABITObject {
         this.tree.put(key, new ABITObject(object));
     }
 
-    public void put(String key, long object) throws ABITException {
+    /**
+     * Associates the specified object with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key key with which the specified value is to be associated
+     * @param object object to be associated with the specified key
+     * @throws ABITException if the object is incompatible
+     * @throws IllegalArgumentException if the key is incompatible
+     */
+    public void put(String key, long object) throws ABITException, IllegalArgumentException  {
         if (!isCompatibleKey(key)) {
-            throw new ABITException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
         }
         if (!isCompatibleInteger(object)) {
             throw new ABITException("Incompatible integer, this should literally not happen");
@@ -502,9 +536,16 @@ public class ABITObject {
         this.tree.put(key, new ABITObject(object));
     }
 
-    public void put(String key, byte[] object) throws ABITException {
+    /**
+     * Associates the specified object with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key key with which the specified value is to be associated
+     * @param object object to be associated with the specified key
+     * @throws ABITException if the object is incompatible
+     * @throws IllegalArgumentException if the key is incompatible
+     */
+    public void put(String key, byte[] object) throws ABITException, IllegalArgumentException  {
         if (!isCompatibleKey(key)) {
-            throw new ABITException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
         }
         if (!isCompatibleBlob(object)) {
             throw new ABITException("Incompatible blob, this should literally not happen");
@@ -512,9 +553,16 @@ public class ABITObject {
         this.tree.put(key, new ABITObject(object, true));
     }
 
-    public void put(String key, String object) throws ABITException {
+    /**
+     * Associates the specified object with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key key with which the specified value is to be associated
+     * @param object object to be associated with the specified key
+     * @throws ABITException if the object is incompatible
+     * @throws IllegalArgumentException if the key is incompatible
+     */
+    public void put(String key, String object) throws ABITException, IllegalArgumentException  {
         if (!isCompatibleKey(key)) {
-            throw new ABITException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
         }
         if (!isCompatibleString(object)) {
             throw new ABITException("Incompatible string");
@@ -522,16 +570,28 @@ public class ABITObject {
         this.tree.put(key, new ABITObject(object));
     }
 
-    public void put(String key, ABITArray object) throws ABITException {
+    /**
+     * Associates the specified object with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key key with which the specified value is to be associated
+     * @param object object to be associated with the specified key
+     * @throws IllegalArgumentException if the key is incompatible
+     */
+    public void put(String key, ABITArray object) throws IllegalArgumentException  {
         if (!isCompatibleKey(key)) {
-            throw new ABITException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
         }
         this.tree.put(key, new ABITObject(object.array));
     }
 
-    public void put(String key, ABITObject object) throws ABITException {
+    /**
+     * Associates the specified object with the specified key in this map. If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key key with which the specified value is to be associated
+     * @param object object to be associated with the specified key
+     * @throws IllegalArgumentException if the key is incompatible
+     */
+    public void put(String key, ABITObject object) throws IllegalArgumentException  {
         if (!isCompatibleKey(key)) {
-            throw new ABITException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
         }
         this.tree.put(key, object);
     }
@@ -571,22 +631,22 @@ public class ABITObject {
         }
     }
 
-    public boolean isCompatibleNull(NULL_t Null) {
+    private boolean isCompatibleNull(NULL_t Null) {
         // obviously supported...
         return true;
     }
 
-    public boolean isCompatibleInteger(long integer) {
+    private boolean isCompatibleInteger(long integer) {
         // a signed long will always be compatible as it's the exact same spec.
         return true;
     }
 
-    public boolean isCompatibleBoolean(boolean bool) {
+    private boolean isCompatibleBoolean(boolean bool) {
         // obviously all values of a boolean is compatible...
         return true;
     }
 
-    public boolean isCompatibleString(String str, String binaryRegex) {
+    private boolean isCompatibleString(String str, String binaryRegex) {
         if (str.matches(binaryRegex)) {
             try {
                 return isCompatibleBlob(Multibase.decode(str));
@@ -600,7 +660,7 @@ public class ABITObject {
         }
     }
 
-    public boolean isCompatibleString(String str) {
+    private boolean isCompatibleString(String str) {
         // string supports up to 4 bytes of int describing length (2s compliment signed)
         // due to supporting all UTF-8 characters, it's not guaranteed that a string when encoded is short enough to fit.
         long totalLength = 0;
@@ -626,35 +686,6 @@ public class ABITObject {
     private boolean isCompatibleKey(String key) {
         long keyLength = key.getBytes(StandardCharsets.UTF_8).length;
         return keyLength <= 256 && keyLength >= 1;
-    }
-
-    /**
-     * 
-     * @param index
-     * @return string of type: "null" / "boolean" / "integer" / "blob" / "string" / "array" / "tree"
-     * @throws ABITException
-     */
-    public String getType(String key) throws ABITException {
-
-        ABITObject obj = this.tree.get(key);
-        switch (obj.type) {
-            case 0:
-                return "null";
-            case 1:
-                return "boolean";
-            case 2:
-                return "integer";
-            case 3:
-                return "blob";
-            case 4:
-                return "string";
-            case 5: 
-                return "array";
-            case 6:
-                return "tree";
-            default:
-                throw new ABITException("Invalid type");
-        }
     }
 
     private JSONArray getJsonArray(int base58CutOff) {

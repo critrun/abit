@@ -3,30 +3,36 @@ package org.deepslate.abit;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ABITArray { // implements List<ABITObject> {
-    public List<ABITObject> array = new ArrayList<>();
+public class ABITArray {
+    List<ABITObject> array = new ArrayList<>();
 
-    public ABITArray (ABITArray array) {
+    ABITArray (ABITArray array) {
         this.array.clear();
         this.array = array.array;
     }
 
-    public ABITArray (List<ABITObject> array) {
+    ABITArray (List<ABITObject> array) {
         this.array.clear();
         this.array = array;
     }
 
+    /**
+     * Initialize an empty ABITArray.
+     */
     public ABITArray () {
         this.array.clear();
     }
 
+    /**
+     * Removes all of the elements from this list (optional operation). The list will be empty after this call returns.
+     */
     public void clear() {
         this.array.clear();
     }
 
     /**
-     * 
-     * @param index
+     * Get the type of the object at specified index.
+     * @param index index of the object to check the type of
      * @return string of type: "null" / "boolean" / "integer" / "blob" / "string" / "array" / "tree"
      * @throws ABITException
      */
@@ -285,6 +291,13 @@ public class ABITArray { // implements List<ABITObject> {
         this.array.add(element);
     }
 
+    /**
+     * Returns the number of elements in this list.  If this list contains
+     * more than {@code Integer.MAX_VALUE} elements, returns
+     * {@code Integer.MAX_VALUE}.
+     *
+     * @return the number of elements in this list
+     */
     public int size() {
         return this.array.size();
     }
