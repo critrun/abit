@@ -13,6 +13,7 @@
 	</repositories>
 ```
 ### Add the dependency
+Replacing Tag with the desired version.
 ```
 	<dependency>
 	    <groupId>org.deepslate</groupId>
@@ -95,7 +96,7 @@
        ....      ╠ number of bytes used for the integer is X+1 (2s compliment & little-endian)
     [NNNNNNNN]   ╝
     [AAAAAAAA]   ╗
-       ....      ╠ number of bytes used for the array is N (UTF-8 encoded string)
+       ....      ╠ number of bytes used for the array is N
     [AAAAAAAA]   ╝
 ```
 
@@ -106,7 +107,7 @@
        ....      ╠ number of bytes used for the integer is X+1 (2s compliment & little-endian)
     [NNNNNNNN]   ╝
     [TTTTTTTT]   ╗
-       ....      ╠ number of bytes used for the tree is N (UTF-8 encoded string)
+       ....      ╠ number of bytes used for the tree is N
     [TTTTTTTT]   ╝
 ```
 
