@@ -100,4 +100,5 @@
 ```
 
 ### other syntax:
-* an integer must be the minimum amount of bytes required to represent it.
+* An integer must be the minimum amount of bytes required to represent it.
+* While an array can be any order, trees need to be ordered such that smaller keys are first, if keys are of equal length, treat it as a big-endian integer and put the smaller integer first.
