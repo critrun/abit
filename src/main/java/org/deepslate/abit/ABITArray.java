@@ -1,0 +1,291 @@
+package org.deepslate.abit;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class ABITArray { // implements List<ABITObject> {
+    public List<ABITObject> array = new ArrayList<>();
+
+    public ABITArray (ABITArray array) {
+        this.array.clear();
+        this.array = array.array;
+    }
+
+    public ABITArray (List<ABITObject> array) {
+        this.array.clear();
+        this.array = array;
+    }
+
+    public ABITArray () {
+        this.array.clear();
+    }
+
+    public void clear() {
+        this.array.clear();
+    }
+
+    /**
+     * 
+     * @param index
+     * @return string of type: "null" / "boolean" / "integer" / "blob" / "string" / "array" / "tree"
+     * @throws ABITException
+     */
+    public String getType(int index) throws ABITException {
+
+        int obj = this.array.get(index).type;
+        switch (obj) {
+            case 0:
+                return "null";
+            case 1:
+                return "boolean";
+            case 2:
+                return "integer";
+            case 3:
+                return "blob";
+            case 4:
+                return "string";
+            case 5: 
+                return "array";
+            case 6:
+                return "tree";
+            default:
+                throw new ABITException("Invalid type");
+        }
+    }
+
+    /**
+     * Get object at index from array
+     * @param index
+     * @return null object
+     * @throws ABITException
+     */
+    public ABITObject.NULL_t getNull(int index) throws ABITException {
+        if(this.array.get(index).type == 0) {
+            return ABITObject.NULL;
+        }
+        else {
+            throw new ABITException("Object is not of type null");
+        }
+    }
+
+    /**
+     * Get object at index from array
+     * @param index
+     * @return boolean
+     * @throws ABITException
+     */
+    public boolean getBoolean(int index) throws ABITException {
+        if(this.array.get(index).type == 1) {
+            return this.array.get(index).booleanValue;
+        }
+        else {
+            throw new ABITException("Object is not of type boolean");
+        }
+    }
+
+    /**
+     * Get object at index from array
+     * @param index
+     * @return integer
+     * @throws ABITException
+     */
+    public long getInteger(int index) throws ABITException {
+        if(this.array.get(index).type == 2) {
+            return this.array.get(index).intValue;
+        }
+        else {
+            throw new ABITException("Object is not of type boolean");
+        }
+    }
+
+    /**
+     * Get object at index from array
+     * @param index
+     * @return blob
+     * @throws ABITException
+     */
+    public byte[] getBlob(int index) throws ABITException {
+        if(this.array.get(index).type == 3) {
+            return this.array.get(index).blob;
+        }
+        else {
+            throw new ABITException("Object is not of type boolean");
+        }
+    }
+
+    /**
+     * Get object at index from array
+     * @param index
+     * @return string
+     * @throws ABITException
+     */
+    public String getString(int index) throws ABITException {
+        if(this.array.get(index).type == 4) {
+            return this.array.get(index).string;
+        }
+        else {
+            throw new ABITException("Object is not of type boolean");
+        }
+    }
+
+    /**
+     * Get object at index from array
+     * @param index
+     * @return ABITArray
+     * @throws ABITException
+     */
+    public ABITArray getArray(int index) throws ABITException {
+        if(this.array.get(index).type == 5) {
+            return new ABITArray(this.array.get(index).array);
+        }
+        else {
+            throw new ABITException("Object is not of type boolean");
+        }
+    }
+
+    /**
+     * Get object at index from array
+     * @param index
+     * @return ABITObject
+     * @throws ABITException
+     */
+    public ABITObject getTree(int index) throws ABITException {
+        if(this.array.get(index).type == 6) {
+            return this.array.get(index);
+        }
+        else {
+            throw new ABITException("Object is not of type boolean");
+        }
+    }
+
+    public boolean isEmpty() {
+        return this.array.isEmpty();
+    }
+
+    public ABITObject remove(int index) {
+        return this.array.remove(index);
+    }
+
+    /**
+     * Inserts the specified element at the specified position in this list (optional operation). Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index index at which the specified element is to be inserted
+     * @param element element to be inserted
+     */
+    public void add(int index, ABITObject.NULL_t element) {
+        this.array.add(index, new ABITObject(ABITObject.NULL));
+    }
+    
+    /**
+     * Inserts the specified element at the specified position in this list (optional operation). Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index index at which the specified element is to be inserted
+     * @param element element to be inserted
+     */
+    public void add(int index, boolean element) {
+        this.array.add(index, new ABITObject(element));
+    }
+
+    /**
+     * Inserts the specified element at the specified position in this list (optional operation). Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index index at which the specified element is to be inserted
+     * @param element element to be inserted
+     */
+    public void add(int index, long element) {
+        this.array.add(index, new ABITObject(element));
+    }
+
+    /**
+     * Inserts the specified element at the specified position in this list (optional operation). Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index index at which the specified element is to be inserted
+     * @param element element to be inserted
+     */
+    public void add(int index, byte[] element) {
+        this.array.add(index, new ABITObject(element, true));
+    }
+
+    /**
+     * Inserts the specified element at the specified position in this list (optional operation). Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index index at which the specified element is to be inserted
+     * @param element element to be inserted
+     */
+    public void add(int index, String element) {
+        this.array.add(index, new ABITObject(element));
+    }
+
+    /**
+     * Inserts the specified element at the specified position in this list (optional operation). Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index index at which the specified element is to be inserted
+     * @param element element to be inserted
+     */
+    public void add(int index, ABITArray element) {
+        this.array.add(index, new ABITObject(element.array));
+    }
+
+    /**
+     * Inserts the specified element at the specified position in this list (optional operation). Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+     * @param index index at which the specified element is to be inserted
+     * @param element element to be inserted
+     */
+    public void add(int index, ABITObject element) {
+        this.array.add(index, element);
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     * @param element element to be appended to this list
+     */
+    public void add(ABITObject.NULL_t element) {
+        this.array.add(new ABITObject(ABITObject.NULL));
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     * @param element element to be appended to this list
+     */
+    public void add(boolean element) {
+        this.array.add(new ABITObject(element));
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     * @param element element to be appended to this list
+     */
+    public void add(long element) {
+        this.array.add(new ABITObject(element));
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     * @param element element to be appended to this list
+     */
+    public void add(byte[] element) {
+        this.array.add(new ABITObject(element, true));
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     * @param element element to be appended to this list
+     */
+    public void add(String element) {
+        this.array.add(new ABITObject(element));
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     * @param element element to be appended to this list
+     */
+    public void add(ABITArray element) {
+        this.array.add(new ABITObject(element.array));
+    }
+
+    /**
+     * Appends the specified element to the end of this list.
+     * @param element element to be appended to this list
+     */
+    public void add(ABITObject element) {
+        this.array.add(element);
+    }
+
+    public int size() {
+        return this.array.size();
+    }
+}
