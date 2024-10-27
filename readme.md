@@ -10,6 +10,7 @@
 	</repositories>
 ```
 ### Add the dependency
+Replacing Tag with the desired version.
 ```
 	<dependency>
 	    <groupId>com.github.deepslateorg</groupId>
