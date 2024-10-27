@@ -1,4 +1,24 @@
-## key:
+# Installation
+## Maven
+### Add the JitPack repository to your build file
+```
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+```
+### Add the dependency
+```
+	<dependency>
+	    <groupId>com.github.deepslateorg</groupId>
+	    <artifactId>abit</artifactId>
+	    <version>Tag</version>
+	</dependency>
+```
+# Spec
+### key:
 ```
     [NNNNNNNN]   ╠ unsigned byte
     [BBBBBBBB]   ╗
@@ -6,18 +26,18 @@
     [BBBBBBBB]   ╝
 ```
 
-## null:
+### null:
 ```
     [0000|0000]
 ```
 
-## boolean:
+### boolean:
 ```
     true:  [0001|0001]
     false: [0000|0001]
 ```
 
-## integer:
+### integer:
 ```
     [0XXX|0010] 
     [NNNNNNNN]   ╗
@@ -25,7 +45,7 @@
     [NNNNNNNN]   ╝
 ```
 
-## blob:
+### blob:
 ```
     [00XX|0011] 
     [NNNNNNNN]   ╗
@@ -36,7 +56,7 @@
     [BBBBBBBB]   ╝
 ```
 
-## string:
+### string:
 ```
     [00XX|0100] 
     [NNNNNNNN]   ╗
@@ -47,7 +67,7 @@
     [SSSSSSSS]   ╝
 ```
 
-## array:
+### array:
 ```
     [00XX|0101] 
     [NNNNNNNN]   ╗
@@ -58,7 +78,7 @@
     [AAAAAAAA]   ╝
 ```
 
-## tree:
+### tree:
 ```
     [00XX|0110] 
     [NNNNNNNN]   ╗
@@ -69,15 +89,15 @@
     [TTTTTTTT]   ╝
 ```
 
-## tree syntax:
+### tree syntax:
 ```
     [  key   ] [ object ] ... [  key   ] [ object ]
 ```
 
-## array syntax:
+### array syntax:
 ```
     [ object ] ... [ object ]
 ```
 
-## other syntax:
+### other syntax:
 * an integer must be the minimum amount of bytes required to represent it.
