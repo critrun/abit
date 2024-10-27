@@ -83,7 +83,7 @@ public class ABITObject {
     }
 
     private int decodeKeyLength(byte[] blob, int offset) {
-        return blob[offset]+1;
+        return (blob[offset]&0xff)+1;
     }
 
     private String decodeKey(byte[] blob, int offset) {

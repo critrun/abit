@@ -48,6 +48,7 @@ public class AppTest
         ABITObject nestedTree = new ABITObject();
         nestedTree.put("thing", "AMOGUS");
         tree.put("nesty", nestedTree);
+        tree.put("a very very very very very very very very very very very very very  very very very very very very very very very very very very very  very very very very very very very very very very very very very  very very very very very very very very very ve long key", "meow");
 
         byte[] treeblob1 = tree.toByteArray();
         byte[] treeblob2 = (new ABITObject(treeblob1)).toByteArray();
