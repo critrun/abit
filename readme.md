@@ -75,7 +75,7 @@ Replacing Tag with the desired version.
        ....      ╠ number of bytes used for the integer is X+1 (2s compliment & little-endian)
     [NNNNNNNN]   ╝
     [AAAAAAAA]   ╗
-       ....      ╠ number of bytes used for the array is N (UTF-8 encoded string)
+       ....      ╠ number of bytes used for the array is N
     [AAAAAAAA]   ╝
 ```
 
@@ -86,7 +86,7 @@ Replacing Tag with the desired version.
        ....      ╠ number of bytes used for the integer is X+1 (2s compliment & little-endian)
     [NNNNNNNN]   ╝
     [TTTTTTTT]   ╗
-       ....      ╠ number of bytes used for the tree is N (UTF-8 encoded string)
+       ....      ╠ number of bytes used for the tree is N
     [TTTTTTTT]   ╝
 ```
 
