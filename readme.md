@@ -1,7 +1,5 @@
 # Installation
-[![Release](https://jitpack.io/v/org.deepslate/Repo.svg?style=flat-square)]
-(https://jitpack.io/#org.deepslate/abit)
-
+[![Release](https://jitpack.io/v/org.deepslate/abit.svg?style=flat-square)](https://jitpack.io/#org.deepslate/abit)
 ## Maven
 ### Add the JitPack repository to your build file
 ```
