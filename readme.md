@@ -1,4 +1,7 @@
 # Installation
+[![Release](https://jitpack.io/v/org.deepslate/Repo.svg?style=flat-square)]
+(https://jitpack.io/#org.deepslate/abit)
+
 ## Maven
 ### Add the JitPack repository to your build file
 ```
@@ -12,11 +15,29 @@
 ### Add the dependency
 ```
 	<dependency>
-	    <groupId>com.github.deepslateorg</groupId>
+	    <groupId>org.deepslate</groupId>
 	    <artifactId>abit</artifactId>
 	    <version>Tag</version>
 	</dependency>
 ```
+## Gradle
+### Add the JitPack repository to your build file in your root build.gradle at the end of repositories:
+```
+	dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+### Add the dependency
+```
+	dependencies {
+	        implementation 'org.deepslate:abit:Tag'
+	}
+```
+
 # Spec
 ### key:
 ```
