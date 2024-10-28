@@ -665,20 +665,6 @@ public class ABITObject {
         // throw new ABITException("Incompatible integer, this should literally not happen");
     }
 
-    /*static boolean isCompatibleString(String str, String binaryRegex) {
-        if (str.matches(binaryRegex)) {
-            try {
-                return isCompatibleBlob(Multibase.decode(str));
-            }
-            catch (IllegalStateException e) {
-                return false;
-            }
-        }
-        else {
-            return isCompatibleString(str);
-        }
-    }*/
-
     static void isCompatibleString(String str) throws ABITException {
         // string supports up to 4 bytes of int describing length (2s compliment signed)
         // due to supporting all UTF-8 characters, it's not guaranteed that a string when encoded is short enough to fit.
