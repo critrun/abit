@@ -188,7 +188,7 @@ public class ABITObject {
         }
 
         // If the number is negative (i.e., if the MSB is set), convert to negative long
-        if ((blob[offset+size] & 0x80) != 0) { // Check the sign bit of the first byte
+        if ((blob[offset+size] & 0x80) != 0 && size < 8) { // Check the sign bit of the first byte
             value -= (1L << size*8); // Adjust value to be negative
         }
 
