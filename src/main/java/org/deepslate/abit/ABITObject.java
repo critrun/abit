@@ -37,6 +37,7 @@ public class ABITObject {
      */
     public ABITObject() {
         this.type = 6;
+        this.tree.clear();
     }
 
     /**
@@ -531,13 +532,9 @@ public class ABITObject {
      * @throws ABITException if the object is incompatible
      * @throws IllegalArgumentException if the key is incompatible
      */
-    public void put(String key, NULL_t object) throws ABITException, IllegalArgumentException {
-        if (!isCompatibleKey(key)) {
-            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
-        }
-        if (!isCompatibleNull(object)) {
-            throw new ABITException("Incompatible null, this should literally not happen");
-        }
+    public void put(String key, NULL_t object) throws IllegalArgumentException {
+        isCompatibleKey(key);
+        isCompatibleNull(object);
         this.tree.put(key, new ABITObject(NULL));
     }
 
@@ -548,13 +545,9 @@ public class ABITObject {
      * @throws ABITException if the object is incompatible
      * @throws IllegalArgumentException if the key is incompatible
      */
-    public void put(String key, boolean object) throws ABITException, IllegalArgumentException  {
-        if (!isCompatibleKey(key)) {
-            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
-        }
-        if (!isCompatibleBoolean(object)) {
-            throw new ABITException("Incompatible boolean, this should literally not happen");
-        }
+    public void put(String key, boolean object) throws IllegalArgumentException  {
+        isCompatibleKey(key);
+        isCompatibleBoolean(object);
         this.tree.put(key, new ABITObject(object));
     }
 
@@ -565,13 +558,9 @@ public class ABITObject {
      * @throws ABITException if the object is incompatible
      * @throws IllegalArgumentException if the key is incompatible
      */
-    public void put(String key, long object) throws ABITException, IllegalArgumentException  {
-        if (!isCompatibleKey(key)) {
-            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
-        }
-        if (!isCompatibleInteger(object)) {
-            throw new ABITException("Incompatible integer, this should literally not happen");
-        }
+    public void put(String key, long object) throws IllegalArgumentException  {
+        isCompatibleKey(key);
+        isCompatibleInteger(object);
         this.tree.put(key, new ABITObject(object));
     }
 
@@ -582,13 +571,9 @@ public class ABITObject {
      * @throws ABITException if the object is incompatible
      * @throws IllegalArgumentException if the key is incompatible
      */
-    public void put(String key, byte[] object) throws ABITException, IllegalArgumentException  {
-        if (!isCompatibleKey(key)) {
-            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
-        }
-        if (!isCompatibleBlob(object)) {
-            throw new ABITException("Incompatible blob, this should literally not happen");
-        }
+    public void put(String key, byte[] object) throws IllegalArgumentException  {
+        isCompatibleKey(key);
+        isCompatibleBlob(object);
         this.tree.put(key, new ABITObject(object, true));
     }
 
@@ -600,12 +585,8 @@ public class ABITObject {
      * @throws IllegalArgumentException if the key is incompatible
      */
     public void put(String key, String object) throws ABITException, IllegalArgumentException  {
-        if (!isCompatibleKey(key)) {
-            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
-        }
-        if (!isCompatibleString(object)) {
-            throw new ABITException("Incompatible string");
-        }
+        isCompatibleKey(key);
+        isCompatibleString(object);
         this.tree.put(key, new ABITObject(object));
     }
 
@@ -616,9 +597,7 @@ public class ABITObject {
      * @throws IllegalArgumentException if the key is incompatible
      */
     public void put(String key, ABITArray object) throws IllegalArgumentException  {
-        if (!isCompatibleKey(key)) {
-            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
-        }
+        isCompatibleKey(key);
         this.tree.put(key, new ABITObject(object.array));
     }
 
@@ -629,9 +608,7 @@ public class ABITObject {
      * @throws IllegalArgumentException if the key is incompatible
      */
     public void put(String key, ABITObject object) throws IllegalArgumentException  {
-        if (!isCompatibleKey(key)) {
-            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
-        }
+        isCompatibleKey(key);
         this.tree.put(key, object);
     }
 
@@ -670,22 +647,25 @@ public class ABITObject {
         }
     }
 
-    private boolean isCompatibleNull(NULL_t Null) {
+    static void isCompatibleNull(NULL_t Null) {
         // obviously supported...
-        return true;
+        return;
+        // throw new ABITException("Incompatible null, this should literally not happen");
     }
 
-    private boolean isCompatibleInteger(long integer) {
+    static void isCompatibleInteger(long integer) {
         // a signed long will always be compatible as it's the exact same spec.
-        return true;
+        return;
+        // throw new ABITException("Incompatible integer, this should literally not happen");
     }
 
-    private boolean isCompatibleBoolean(boolean bool) {
+    static void isCompatibleBoolean(boolean bool) {
         // obviously all values of a boolean is compatible...
-        return true;
+        return;
+        // throw new ABITException("Incompatible integer, this should literally not happen");
     }
 
-    private boolean isCompatibleString(String str, String binaryRegex) {
+    /*static boolean isCompatibleString(String str, String binaryRegex) {
         if (str.matches(binaryRegex)) {
             try {
                 return isCompatibleBlob(Multibase.decode(str));
@@ -697,9 +677,9 @@ public class ABITObject {
         else {
             return isCompatibleString(str);
         }
-    }
+    }*/
 
-    private boolean isCompatibleString(String str) {
+    static void isCompatibleString(String str) throws ABITException {
         // string supports up to 4 bytes of int describing length (2s compliment signed)
         // due to supporting all UTF-8 characters, it's not guaranteed that a string when encoded is short enough to fit.
         long totalLength = 0;
@@ -714,17 +694,22 @@ public class ABITObject {
             totalLength+= str.substring((int)idx, (int)idx_end).getBytes(StandardCharsets.UTF_8).length;
             charLeft-= idx_end-idx;
         }
-        return totalLength < Integer.MAX_VALUE;
+        if (totalLength > Integer.MAX_VALUE) {
+            throw new ABITException("Incompatible string, it's too long");
+        }
     }
 
-    private boolean isCompatibleBlob(byte[] bytes) {
+    static void isCompatibleBlob(byte[] bytes) {
         // if a blob fits inside java, it is compatible
-        return true;
+        return;
+        // throw new ABITException("Incompatible blob, this should literally not happen");
     }
 
-    private boolean isCompatibleKey(String key) {
+    static void isCompatibleKey(String key) throws IllegalArgumentException {
         long keyLength = key.getBytes(StandardCharsets.UTF_8).length;
-        return keyLength <= 256 && keyLength >= 1;
+        if (keyLength > 256 || keyLength < 1) {
+            throw new IllegalArgumentException("Incompatible key, must be between 1 - 256 bytes when encoded with UTF-8");
+        }
     }
 
     private JSONArray getJsonArray(int base58CutOff) {
@@ -765,8 +750,6 @@ public class ABITObject {
 
         return out;
     }
-
-    
 
     public JSONObject getJson(int base58CutOff) {
         JSONObject out = new JSONObject();

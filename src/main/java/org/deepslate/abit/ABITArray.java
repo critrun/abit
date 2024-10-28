@@ -147,7 +147,7 @@ public class ABITArray {
             return this.array.get(index).intValue;
         }
         else {
-            throw new ABITException("Object is not of type boolean");
+            throw new ABITException("Object is not of type integer");
         }
     }
 
@@ -162,7 +162,7 @@ public class ABITArray {
             return this.array.get(index).blob;
         }
         else {
-            throw new ABITException("Object is not of type boolean");
+            throw new ABITException("Object is not of type blob");
         }
     }
 
@@ -177,7 +177,7 @@ public class ABITArray {
             return this.array.get(index).string;
         }
         else {
-            throw new ABITException("Object is not of type boolean");
+            throw new ABITException("Object is not of type string");
         }
     }
 
@@ -192,7 +192,7 @@ public class ABITArray {
             return new ABITArray(this.array.get(index).array);
         }
         else {
-            throw new ABITException("Object is not of type boolean");
+            throw new ABITException("Object is not of type array");
         }
     }
 
@@ -207,7 +207,7 @@ public class ABITArray {
             return this.array.get(index);
         }
         else {
-            throw new ABITException("Object is not of type boolean");
+            throw new ABITException("Object is not of type tree");
         }
     }
 
@@ -215,8 +215,8 @@ public class ABITArray {
         return this.array.isEmpty();
     }
 
-    public ABITObject remove(int index) {
-        return this.array.remove(index);
+    public void remove(int index) {
+        this.array.remove(index);
     }
 
     /**
@@ -225,6 +225,7 @@ public class ABITArray {
      * @param element element to be inserted
      */
     public void add(int index, ABITObject.NULL_t element) {
+        ABITObject.isCompatibleNull(element);
         this.array.add(index, new ABITObject(ABITObject.NULL));
     }
     
@@ -234,6 +235,7 @@ public class ABITArray {
      * @param element element to be inserted
      */
     public void add(int index, boolean element) {
+        ABITObject.isCompatibleBoolean(element);
         this.array.add(index, new ABITObject(element));
     }
 
@@ -243,6 +245,7 @@ public class ABITArray {
      * @param element element to be inserted
      */
     public void add(int index, long element) {
+        ABITObject.isCompatibleInteger(element);
         this.array.add(index, new ABITObject(element));
     }
 
@@ -252,6 +255,7 @@ public class ABITArray {
      * @param element element to be inserted
      */
     public void add(int index, byte[] element) {
+        ABITObject.isCompatibleBlob(element);
         this.array.add(index, new ABITObject(element, true));
     }
 
@@ -260,7 +264,8 @@ public class ABITArray {
      * @param index index at which the specified element is to be inserted
      * @param element element to be inserted
      */
-    public void add(int index, String element) {
+    public void add(int index, String element) throws ABITException {
+        ABITObject.isCompatibleString(element);
         this.array.add(index, new ABITObject(element));
     }
 
@@ -287,6 +292,7 @@ public class ABITArray {
      * @param element element to be appended to this list
      */
     public void add(ABITObject.NULL_t element) {
+        ABITObject.isCompatibleNull(element);
         this.array.add(new ABITObject(ABITObject.NULL));
     }
 
@@ -295,6 +301,7 @@ public class ABITArray {
      * @param element element to be appended to this list
      */
     public void add(boolean element) {
+        ABITObject.isCompatibleBoolean(element);
         this.array.add(new ABITObject(element));
     }
 
@@ -303,6 +310,7 @@ public class ABITArray {
      * @param element element to be appended to this list
      */
     public void add(long element) {
+        ABITObject.isCompatibleInteger(element);
         this.array.add(new ABITObject(element));
     }
 
@@ -311,6 +319,7 @@ public class ABITArray {
      * @param element element to be appended to this list
      */
     public void add(byte[] element) {
+        ABITObject.isCompatibleBlob(element);
         this.array.add(new ABITObject(element, true));
     }
 
@@ -318,7 +327,8 @@ public class ABITArray {
      * Appends the specified element to the end of this list.
      * @param element element to be appended to this list
      */
-    public void add(String element) {
+    public void add(String element) throws ABITException {
+        ABITObject.isCompatibleString(element);
         this.array.add(new ABITObject(element));
     }
 
