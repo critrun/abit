@@ -49,6 +49,45 @@ public class ABITObject {
         this.tree = decodeTree(document, 0, document.length);
     }
 
+    public ABITObject(JSONObject json, String binaryRegex) throws ABITException, IllegalStateException {
+        this.type = 6;
+        this.tree.clear();
+
+        for(String key: json.keySet()) {
+            Object obj = json.get(key);
+            switch (obj) {
+                case Boolean b -> {
+                    this.put(key, b);
+                }
+                case Integer i -> {
+                    this.put(key, i);
+                }
+                case String s -> {
+                    if (key.matches(binaryRegex)) {
+                        this.put(key, Multibase.decode(s));
+                    }
+                    else {
+                        this.put(key, s);
+                    }
+                }
+                case JSONArray a -> {
+                    this.put(key, new ABITArray(a, binaryRegex, key));
+                }
+                case JSONObject o -> {
+                    this.put(key, new ABITObject(o, binaryRegex));
+                }
+                default -> {
+                    if (json.isNull(key)) {
+                        this.put(key, NULL);
+                    }
+                    else {
+                        throw new ABITException("Unsupported object type in json document");
+                    }
+                }
+            }
+        }
+    }
+
     ABITObject(SortedMap<String, ABITObject> tree) {
         this.type = 6;
         this.tree = tree;

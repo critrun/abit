@@ -1,6 +1,13 @@
 package org.deepslate.abit;
 
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import io.ipfs.multibase.Multibase;
+import java.util.Iterator;
+
 import java.util.ArrayList;
 
 public class ABITArray {
@@ -21,6 +28,46 @@ public class ABITArray {
      */
     public ABITArray () {
         this.array.clear();
+    }
+
+    ABITArray(JSONArray json, String binaryRegex, String selfKey) throws ABITException, IllegalStateException {
+        this.array.clear();
+
+        boolean arrayHoldsBinary = selfKey.matches(binaryRegex);
+
+        for (Iterator<Object> iterator = json.iterator(); iterator.hasNext(); ) {
+            Object obj = iterator.next();
+            switch (obj) {
+                case Boolean b -> {
+                    this.add(b);
+                }
+                case Integer i -> {
+                    this.add(i);
+                }
+                case String s -> {
+                    if (arrayHoldsBinary) {
+                        this.add(Multibase.decode(s));
+                    }
+                    else {
+                        this.add(s);
+                    }
+                }
+                case JSONArray a -> {
+                    this.add(new ABITArray(a, binaryRegex, selfKey));
+                }
+                case JSONObject o -> {
+                    this.add(new ABITObject(o, binaryRegex));
+                }
+                default -> {
+                    if (JSONObject.NULL.equals(obj)) {
+                        this.add(ABITObject.NULL);
+                    }
+                    else {
+                        throw new ABITException("Unsupported object type in json document");
+                    }
+                }
+            }
+        }
     }
 
     /**
