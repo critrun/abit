@@ -1,6 +1,6 @@
 package org.deepslate.abit;
 
-public class ABITException extends Exception {
+public class ABITException extends RuntimeException {
     public ABITException(String errorMessage) {
         super(errorMessage);
     }
