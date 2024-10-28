@@ -790,4 +790,145 @@ public class ABITObject {
     public JSONObject getJson() {
         return getJson(32);
     }
+
+    /**
+     * Get the type of the object at specified key.
+     * @param key key of the object to check the type of
+     * @return string of type: "null" / "boolean" / "integer" / "blob" / "string" / "array" / "tree"
+     * @throws ABITException
+     */
+    public String getType(String key) throws ABITException {
+
+        int obj = this.tree.get(key).type;
+        switch (obj) {
+            case 0:
+                return "null";
+            case 1:
+                return "boolean";
+            case 2:
+                return "integer";
+            case 3:
+                return "blob";
+            case 4:
+                return "string";
+            case 5: 
+                return "array";
+            case 6:
+                return "tree";
+            default:
+                throw new ABITException("Invalid type");
+        }
+    }
+
+    /**
+     * Get object associated with key from tree
+     * @param key
+     * @return null object
+     * @throws ABITException
+     */
+    public ABITObject.NULL_t getNull(String key) throws ABITException {
+        ABITObject obj = this.tree.get(key);
+        if(obj.type == 0) {
+            return ABITObject.NULL;
+        }
+        else {
+            throw new ABITException("Object is not of type null");
+        }
+    }
+
+    /**
+     * Get object associated with key from tree
+     * @param key
+     * @return boolean
+     * @throws ABITException
+     */
+    public boolean getBoolean(String key) throws ABITException {
+        ABITObject obj = this.tree.get(key);
+        if(obj.type == 1) {
+            return obj.booleanValue;
+        }
+        else {
+            throw new ABITException("Object is not of type boolean");
+        }
+    }
+
+    /**
+     * Get object associated with key from tree
+     * @param key
+     * @return integer
+     * @throws ABITException
+     */
+    public long getInteger(String key) throws ABITException {
+        ABITObject obj = this.tree.get(key);
+        if(obj.type == 2) {
+            return obj.intValue;
+        }
+        else {
+            throw new ABITException("Object is not of type integer");
+        }
+    }
+
+    /**
+     * Get object associated with key from tree
+     * @param key
+     * @return blob
+     * @throws ABITException
+     */
+    public byte[] getBlob(String key) throws ABITException {
+        ABITObject obj = this.tree.get(key);
+        if(obj.type == 3) {
+            return obj.blob;
+        }
+        else {
+            throw new ABITException("Object is not of type blob");
+        }
+    }
+
+    /**
+     * Get object associated with key from tree
+     * @param key
+     * @return string
+     * @throws ABITException
+     */
+    public String getString(String key) throws ABITException {
+        ABITObject obj = this.tree.get(key);
+        if(obj.type == 4) {
+            return obj.string;
+        }
+        else {
+            throw new ABITException("Object is not of type string");
+        }
+    }
+
+    /**
+     * Get object associated with key from tree
+     * @param key
+     * @return ABITArray
+     * @throws ABITException
+     */
+    public ABITArray getArray(String key) throws ABITException {
+        ABITObject obj = this.tree.get(key);
+        if(obj.type == 5) {
+            return new ABITArray(obj.array);
+        }
+        else {
+            throw new ABITException("Object is not of type array");
+        }
+    }
+
+    /**
+     * Get object associated with key from tree
+     * @param key
+     * @return ABITObject
+     * @throws ABITException
+     */
+    public ABITObject getTree(String key) throws ABITException {
+        ABITObject obj = this.tree.get(key);
+        if(obj.type == 6) {
+            return obj;
+        }
+        else {
+            throw new ABITException("Object is not of type tree");
+        }
+    }
 }
